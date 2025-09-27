@@ -2,10 +2,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     initializeStars();
     initializeScrollEffects();
-    initializeMenuUpload();
     initializeMobileMenu();
     initializeScrollToTop();
     initializeAnimations();
+    initializeGame();
 });
 
 // Crear estrellas animadas
@@ -99,115 +99,8 @@ function initializeScrollEffects() {
     });
 }
 
-// Inicializar subida de menú
-function initializeMenuUpload() {
-    const menuFile = document.getElementById('menuFile');
-    const menuDisplay = document.getElementById('menuDisplay');
-    const placeholder = document.querySelector('.menu-placeholder');
-
-    if (menuFile) {
-        menuFile.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            
-            if (file) {
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    const result = e.target.result;
-                    
-                    // Limpiar display anterior
-                    menuDisplay.innerHTML = '';
-                    
-                    if (file.type.startsWith('image/')) {
-                        // Es una imagen
-                        const img = document.createElement('img');
-                        img.src = result;
-                        img.style.cssText = `
-                            width: 100%;
-                            max-width: 700px;
-                            height: auto;
-                            border-radius: 20px;
-                            box-shadow: 0 20px 40px rgba(236, 72, 153, 0.3);
-                            margin-top: 2rem;
-                            opacity: 0;
-                            transform: scale(0.8);
-                            transition: all 0.5s ease;
-                        `;
-                        
-                        menuDisplay.appendChild(img);
-                        menuDisplay.style.display = 'block';
-                        
-                        // Animar entrada
-                        setTimeout(() => {
-                            img.style.opacity = '1';
-                            img.style.transform = 'scale(1)';
-                        }, 100);
-                        
-                        // Ocultar placeholder
-                        placeholder.style.display = 'none';
-                        
-                    } else if (file.type === 'application/pdf') {
-                        // Es un PDF
-                        const pdfContainer = document.createElement('div');
-                        pdfContainer.style.cssText = `
-                            background: rgba(255, 255, 255, 0.1);
-                            padding: 2rem;
-                            border-radius: 20px;
-                            text-align: center;
-                            border: 1px solid rgba(139, 92, 246, 0.3);
-                            margin-top: 2rem;
-                        `;
-                        
-                        pdfContainer.innerHTML = `
-                            <i class="fas fa-file-pdf" style="font-size: 4rem; color: #EC4899; margin-bottom: 1rem;"></i>
-                            <h4 style="color: white; margin-bottom: 1rem;">Menú PDF Subido</h4>
-                            <p style="color: rgba(255, 255, 255, 0.8);">${file.name}</p>
-                            <a href="${result}" download="${file.name}" 
-                               style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1.5rem; 
-                                      background: linear-gradient(45deg, #EC4899, #A855F7); 
-                                      color: white; text-decoration: none; border-radius: 25px;">
-                                <i class="fas fa-download"></i> Descargar PDF
-                            </a>
-                        `;
-                        
-                        menuDisplay.appendChild(pdfContainer);
-                        menuDisplay.style.display = 'block';
-                        placeholder.style.display = 'none';
-                    }
-                };
-                
-                reader.readAsDataURL(file);
-            }
-        });
-    }
-
-    // Drag and drop functionality
-    if (placeholder) {
-        placeholder.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            placeholder.style.borderColor = '#EC4899';
-            placeholder.style.transform = 'scale(1.05)';
-        });
-
-        placeholder.addEventListener('dragleave', function(e) {
-            e.preventDefault();
-            placeholder.style.borderColor = 'rgba(139, 92, 246, 0.5)';
-            placeholder.style.transform = 'scale(1)';
-        });
-
-        placeholder.addEventListener('drop', function(e) {
-            e.preventDefault();
-            placeholder.style.borderColor = 'rgba(139, 92, 246, 0.5)';
-            placeholder.style.transform = 'scale(1)';
-            
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                menuFile.files = files;
-                menuFile.dispatchEvent(new Event('change'));
-            }
-        });
-    }
-}
+// Función de subida de menú removida - ahora usamos imagen estática
+// La imagen del menú se muestra directamente desde el HTML
 
 // Menú móvil
 function initializeMobileMenu() {
@@ -666,5 +559,399 @@ document.addEventListener('DOMContentLoaded', function() {
         images.forEach(img => imageObserver.observe(img));
     }
 });
+
+// ==================== MINIJUEGO ESPACIAL ====================
+
+// Variables del juego
+let game = {
+    canvas: null,
+    ctx: null,
+    isRunning: false,
+    isPaused: false,
+    score: 0,
+    lives: 3,
+    cakes: 0,
+    player: {
+        x: 0,
+        y: 0,
+        width: 60,
+        height: 40,
+        speed: 5
+    },
+    ingredients: [],
+    particles: [],
+    keys: {},
+    lastIngredientTime: 0,
+    ingredientSpawnRate: 2000,
+    gameSpeed: 1
+};
+
+// Inicializar el juego
+function initializeGame() {
+    game.canvas = document.getElementById('gameCanvas');
+    if (!game.canvas) return;
+    
+    game.ctx = game.canvas.getContext('2d');
+    game.player.x = game.canvas.width / 2 - game.player.width / 2;
+    game.player.y = game.canvas.height - game.player.height - 20;
+    
+    // Event listeners para botones
+    document.getElementById('startGameBtn')?.addEventListener('click', startGame);
+    document.getElementById('resumeGameBtn')?.addEventListener('click', resumeGame);
+    document.getElementById('restartGameBtn')?.addEventListener('click', restartGame);
+    document.getElementById('playAgainBtn')?.addEventListener('click', restartGame);
+    
+    // Event listeners para teclado
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keyup', handleKeyUp);
+    
+    // Event listeners para touch (móvil)
+    game.canvas.addEventListener('touchstart', handleTouchStart);
+    game.canvas.addEventListener('touchmove', handleTouchMove);
+    
+    // Inicializar pantalla de inicio
+    showScreen('gameStartScreen');
+}
+
+// Manejar teclas presionadas
+function handleKeyDown(e) {
+    game.keys[e.code] = true;
+    
+    if (e.code === 'Space') {
+        e.preventDefault();
+        if (game.isRunning && !game.isPaused) {
+            pauseGame();
+        } else if (game.isPaused) {
+            resumeGame();
+        }
+    }
+}
+
+// Manejar teclas liberadas
+function handleKeyUp(e) {
+    game.keys[e.code] = false;
+}
+
+// Manejar touch para móvil
+function handleTouchStart(e) {
+    e.preventDefault();
+    const rect = game.canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    const x = touch.clientX - rect.left;
+    
+    if (x < game.canvas.width / 2) {
+        game.keys['ArrowLeft'] = true;
+    } else {
+        game.keys['ArrowRight'] = true;
+    }
+}
+
+function handleTouchMove(e) {
+    e.preventDefault();
+    const rect = game.canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    const x = touch.clientX - rect.left;
+    
+    game.keys['ArrowLeft'] = false;
+    game.keys['ArrowRight'] = false;
+    
+    if (x < game.canvas.width / 2) {
+        game.keys['ArrowLeft'] = true;
+    } else {
+        game.keys['ArrowRight'] = true;
+    }
+}
+
+// Iniciar el juego
+function startGame() {
+    game.isRunning = true;
+    game.isPaused = false;
+    game.score = 0;
+    game.lives = 3;
+    game.cakes = 0;
+    game.ingredients = [];
+    game.particles = [];
+    game.gameSpeed = 1;
+    game.ingredientSpawnRate = 2000;
+    
+    updateUI();
+    hideAllScreens();
+    gameLoop();
+}
+
+// Pausar el juego
+function pauseGame() {
+    if (!game.isRunning) return;
+    game.isPaused = true;
+    showScreen('gamePauseScreen');
+}
+
+// Reanudar el juego
+function resumeGame() {
+    if (!game.isRunning) return;
+    game.isPaused = false;
+    hideAllScreens();
+    gameLoop();
+}
+
+// Reiniciar el juego
+function restartGame() {
+    startGame();
+}
+
+// Mostrar pantalla específica
+function showScreen(screenId) {
+    hideAllScreens();
+    document.getElementById(screenId).style.display = 'block';
+}
+
+// Ocultar todas las pantallas
+function hideAllScreens() {
+    document.getElementById('gameStartScreen').style.display = 'none';
+    document.getElementById('gamePauseScreen').style.display = 'none';
+    document.getElementById('gameEndScreen').style.display = 'none';
+}
+
+// Bucle principal del juego
+function gameLoop() {
+    if (!game.isRunning || game.isPaused) return;
+    
+    update();
+    draw();
+    
+    requestAnimationFrame(gameLoop);
+}
+
+// Actualizar lógica del juego
+function update() {
+    // Mover jugador
+    if (game.keys['ArrowLeft'] && game.player.x > 0) {
+        game.player.x -= game.player.speed;
+    }
+    if (game.keys['ArrowRight'] && game.player.x < game.canvas.width - game.player.width) {
+        game.player.x += game.player.speed;
+    }
+    
+    // Generar ingredientes
+    const now = Date.now();
+    if (now - game.lastIngredientTime > game.ingredientSpawnRate) {
+        spawnIngredient();
+        game.lastIngredientTime = now;
+    }
+    
+    // Actualizar ingredientes
+    for (let i = game.ingredients.length - 1; i >= 0; i--) {
+        const ingredient = game.ingredients[i];
+        ingredient.y += ingredient.speed * game.gameSpeed;
+        
+        // Verificar colisión con jugador
+        if (checkCollision(game.player, ingredient)) {
+            if (ingredient.type === 'good') {
+                game.score += ingredient.points;
+                game.cakes++;
+                createParticles(ingredient.x, ingredient.y, '#EC4899');
+            } else {
+                game.lives--;
+                createParticles(ingredient.x, ingredient.y, '#FF6B6B');
+            }
+            game.ingredients.splice(i, 1);
+        }
+        // Remover ingredientes que salieron de pantalla
+        else if (ingredient.y > game.canvas.height) {
+            if (ingredient.type === 'good') {
+                game.lives--;
+            }
+            game.ingredients.splice(i, 1);
+        }
+    }
+    
+    // Actualizar partículas
+    for (let i = game.particles.length - 1; i >= 0; i--) {
+        const particle = game.particles[i];
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+        particle.life--;
+        particle.alpha = particle.life / particle.maxLife;
+        
+        if (particle.life <= 0) {
+            game.particles.splice(i, 1);
+        }
+    }
+    
+    // Aumentar dificultad
+    if (game.score > 0 && game.score % 100 === 0) {
+        game.gameSpeed = Math.min(2, 1 + game.score / 1000);
+        game.ingredientSpawnRate = Math.max(800, 2000 - game.score / 50);
+    }
+    
+    // Verificar fin del juego
+    if (game.lives <= 0) {
+        endGame();
+    }
+    
+    updateUI();
+}
+
+// Dibujar en el canvas
+function draw() {
+    // Limpiar canvas
+    game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height);
+    
+    // Dibujar fondo estrellado
+    drawStars();
+    
+    // Dibujar ingredientes
+    game.ingredients.forEach(ingredient => {
+        drawIngredient(ingredient);
+    });
+    
+    // Dibujar jugador (nave pastelera)
+    drawPlayer();
+    
+    // Dibujar partículas
+    game.particles.forEach(particle => {
+        drawParticle(particle);
+    });
+}
+
+// Dibujar estrellas de fondo
+function drawStars() {
+    game.ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+    for (let i = 0; i < 50; i++) {
+        const x = (i * 37) % game.canvas.width;
+        const y = (i * 23) % game.canvas.height;
+        const size = Math.sin(Date.now() * 0.001 + i) * 2 + 1;
+        game.ctx.fillRect(x, y, size, size);
+    }
+}
+
+// Dibujar ingrediente
+function drawIngredient(ingredient) {
+    game.ctx.save();
+    game.ctx.translate(ingredient.x + ingredient.width/2, ingredient.y + ingredient.height/2);
+    game.ctx.rotate(ingredient.rotation);
+    
+    // Dibujar ingrediente según tipo
+    if (ingredient.type === 'good') {
+        // Ingrediente bueno (harina, huevos, etc.)
+        game.ctx.fillStyle = ingredient.color;
+        game.ctx.fillRect(-ingredient.width/2, -ingredient.height/2, ingredient.width, ingredient.height);
+        game.ctx.fillStyle = '#FFF';
+        game.ctx.font = '12px Arial';
+        game.ctx.textAlign = 'center';
+        game.ctx.fillText(ingredient.emoji, 0, 4);
+    } else {
+        // Ingrediente malo (asteroides)
+        game.ctx.fillStyle = ingredient.color;
+        game.ctx.fillRect(-ingredient.width/2, -ingredient.height/2, ingredient.width, ingredient.height);
+        game.ctx.fillStyle = '#FFF';
+        game.ctx.font = '12px Arial';
+        game.ctx.textAlign = 'center';
+        game.ctx.fillText('☄️', 0, 4);
+    }
+    
+    game.ctx.restore();
+    ingredient.rotation += 0.1;
+}
+
+// Dibujar jugador
+function drawPlayer() {
+    game.ctx.save();
+    game.ctx.translate(game.player.x + game.player.width/2, game.player.y + game.player.height/2);
+    
+    // Cuerpo de la nave
+    game.ctx.fillStyle = '#EC4899';
+    game.ctx.fillRect(-game.player.width/2, -game.player.height/2, game.player.width, game.player.height);
+    
+    // Detalles de la nave
+    game.ctx.fillStyle = '#06B6D4';
+    game.ctx.fillRect(-game.player.width/2 + 5, -game.player.height/2 + 5, game.player.width - 10, 8);
+    
+    // Emoji de pastel
+    game.ctx.fillStyle = '#FFF';
+    game.ctx.font = '16px Arial';
+    game.ctx.textAlign = 'center';
+    game.ctx.fillText('🧁', 0, 5);
+    
+    game.ctx.restore();
+}
+
+// Dibujar partícula
+function drawParticle(particle) {
+    game.ctx.save();
+    game.ctx.globalAlpha = particle.alpha;
+    game.ctx.fillStyle = particle.color;
+    game.ctx.fillRect(particle.x, particle.y, particle.size, particle.size);
+    game.ctx.restore();
+}
+
+// Generar ingrediente
+function spawnIngredient() {
+    const types = [
+        { type: 'good', emoji: '🌾', color: '#F59E0B', points: 10 }, // Harina
+        { type: 'good', emoji: '🥚', color: '#FEF3C7', points: 15 }, // Huevos
+        { type: 'good', emoji: '🍓', color: '#EF4444', points: 20 }, // Fresas
+        { type: 'good', emoji: '🍫', color: '#92400E', points: 25 }, // Chocolate
+        { type: 'bad', emoji: '☄️', color: '#6B7280', points: 0 }    // Asteroide
+    ];
+    
+    const ingredientType = types[Math.floor(Math.random() * types.length)];
+    const isGood = Math.random() < 0.7; // 70% ingredientes buenos
+    
+    const ingredient = {
+        x: Math.random() * (game.canvas.width - 30),
+        y: -30,
+        width: 30,
+        height: 30,
+        speed: 2 + Math.random() * 2,
+        type: isGood ? 'good' : 'bad',
+        emoji: isGood ? ingredientType.emoji : '☄️',
+        color: isGood ? ingredientType.color : '#6B7280',
+        points: isGood ? ingredientType.points : 0,
+        rotation: 0
+    };
+    
+    game.ingredients.push(ingredient);
+}
+
+// Verificar colisión
+function checkCollision(rect1, rect2) {
+    return rect1.x < rect2.x + rect2.width &&
+           rect1.x + rect1.width > rect2.x &&
+           rect1.y < rect2.y + rect2.height &&
+           rect1.y + rect1.height > rect2.y;
+}
+
+// Crear partículas
+function createParticles(x, y, color) {
+    for (let i = 0; i < 8; i++) {
+        game.particles.push({
+            x: x,
+            y: y,
+            vx: (Math.random() - 0.5) * 4,
+            vy: (Math.random() - 0.5) * 4,
+            size: Math.random() * 4 + 2,
+            color: color,
+            life: 30,
+            maxLife: 30,
+            alpha: 1
+        });
+    }
+}
+
+// Terminar juego
+function endGame() {
+    game.isRunning = false;
+    document.getElementById('finalScore').textContent = game.score;
+    document.getElementById('cakesCreated').textContent = game.cakes;
+    showScreen('gameEndScreen');
+}
+
+// Actualizar interfaz
+function updateUI() {
+    document.getElementById('currentScore').textContent = game.score;
+    document.getElementById('cakesCount').textContent = game.cakes;
+    document.getElementById('livesCount').textContent = game.lives;
+}
 
 console.log('🌟 Space Light - Sitio web cargado exitosamente! 🚀');
