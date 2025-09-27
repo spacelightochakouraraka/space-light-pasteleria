@@ -653,13 +653,13 @@ section {
     color: var(--accent-pink);
 }
 
-/* Upload area */
-.menu-upload-area {
+/* Imagen del menú */
+.menu-image-area {
     text-align: center;
     margin-top: 3rem;
 }
 
-.upload-title {
+.menu-image-title {
     font-size: 2rem;
     margin-bottom: 2rem;
     color: var(--accent-cyan);
@@ -669,75 +669,47 @@ section {
     gap: 1rem;
 }
 
-.menu-placeholder {
+.menu-image-container {
     width: 100%;
-    max-width: 700px;
-    height: 500px;
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
-    border: 3px dashed rgba(139, 92, 246, 0.5);
-    border-radius: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    max-width: 800px;
     margin: 0 auto;
-    cursor: pointer;
-    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(236, 72, 153, 0.3);
+    transition: all 0.3s ease;
 }
 
-.menu-placeholder:hover {
+.menu-image-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 60px rgba(236, 72, 153, 0.4);
+}
+
+.menu-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.menu-image:hover {
     transform: scale(1.02);
-    box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
-    border-color: var(--accent-pink);
 }
 
-.menu-placeholder::before {
+/* Efecto de borde animado para la imagen del menú */
+.menu-image-container::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%);
-    animation: rotate 15s linear infinite;
-}
-
-.menu-upload-content {
-    position: relative;
-    z-index: 2;
-}
-
-.upload-icon {
-    font-size: 4rem;
-    color: var(--accent-cyan);
-    margin-bottom: 1rem;
-}
-
-.menu-upload-content h4 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: white;
-}
-
-.upload-formats {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.7);
-    background: rgba(139, 92, 246, 0.2);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    display: inline-block;
-    margin-top: 1rem;
-}
-
-.menu-display {
-    margin-top: 2rem;
-}
-
-.menu-display img {
-    max-width: 100%;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(236, 72, 153, 0.3);
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: linear-gradient(45deg, #EC4899, #06B6D4, #A855F7, #F59E0B);
+    border-radius: 28px;
+    z-index: -1;
+    animation: rotate 4s linear infinite;
+    opacity: 0.7;
 }
 
 .menu-footer {
@@ -890,6 +862,219 @@ section {
     background: rgba(16, 185, 129, 0.2);
     color: #10B981;
     border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* Minijuego Espacial */
+.game-container {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 4rem;
+    border-radius: 30px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.game-intro {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.game-description {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.game-area {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 2rem;
+    align-items: start;
+}
+
+.game-canvas-container {
+    position: relative;
+    background: linear-gradient(135deg, rgba(15, 15, 30, 0.8), rgba(30, 30, 60, 0.8));
+    border-radius: 20px;
+    overflow: hidden;
+    border: 2px solid rgba(139, 92, 246, 0.3);
+    box-shadow: 0 20px 40px rgba(236, 72, 153, 0.2);
+}
+
+#gameCanvas {
+    display: block;
+    background: linear-gradient(180deg, #0D1117 0%, #1A0B2E 50%, #16213E 100%);
+    border-radius: 18px;
+}
+
+.game-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 15, 30, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+}
+
+.game-start-screen,
+.game-pause-screen,
+.game-end-screen {
+    text-align: center;
+    color: white;
+}
+
+.game-start-screen h3,
+.game-pause-screen h3,
+.game-end-screen h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #EC4899, #06B6D4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-family: 'Orbitron', monospace;
+}
+
+.game-start-screen p,
+.game-pause-screen p,
+.game-end-screen p {
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.game-btn {
+    background: linear-gradient(45deg, #EC4899, #A855F7);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0.5rem;
+    box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
+}
+
+.game-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(236, 72, 153, 0.5);
+}
+
+.game-info {
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(6, 182, 212, 0.1));
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.game-stats {
+    margin-bottom: 2rem;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    background: rgba(236, 72, 153, 0.1);
+    transform: translateX(5px);
+}
+
+.stat-item i {
+    color: var(--accent-cyan);
+    font-size: 1.2rem;
+    width: 20px;
+}
+
+.stat-item span {
+    color: white;
+    font-weight: 600;
+}
+
+.game-controls h4 {
+    color: var(--accent-pink);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.control-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.control-item:hover {
+    background: rgba(6, 182, 212, 0.1);
+}
+
+.control-item i {
+    color: var(--accent-gold);
+    font-size: 1rem;
+    width: 20px;
+}
+
+.control-item span {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+}
+
+/* Responsive para el juego */
+@media (max-width: 1024px) {
+    .game-area {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .game-info {
+        order: -1;
+    }
+    
+    #gameCanvas {
+        width: 100%;
+        height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-container {
+        padding: 2rem 1rem;
+    }
+    
+    #gameCanvas {
+        height: 350px;
+    }
+    
+    .game-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    
+    .game-controls {
+        display: none;
+    }
 }
 
 /* Social section */
@@ -1107,6 +1292,11 @@ footer {
     
     .menu-categories {
         grid-template-columns: 1fr;
+    }
+    
+    .menu-image-container {
+        max-width: 100%;
+        margin: 0 1rem;
     }
     
     .contact-grid {
