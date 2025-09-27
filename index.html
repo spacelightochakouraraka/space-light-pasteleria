@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Light - Pastelería Cósmica</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Fondo cósmico -->
+    <div class="cosmic-background"></div>
+    <div class="stars-container" id="stars-container"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <nav>
+            <div class="logo">
+                <i class="fas fa-rocket"></i> Space Light
+            </div>
+            <ul class="nav-links">
+                <li><a href="#inicio"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="#sobre-nosotros"><i class="fas fa-star"></i> Nosotros</a></li>
+                <li><a href="#menu"><i class="fas fa-utensils"></i> Menú</a></li>
+                <li><a href="#ubicacion"><i class="fas fa-map-marker-alt"></i> Ubicación</a></li>
+            </ul>
+            <div class="mobile-menu-toggle" id="mobile-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-moon"></i>
+                <span>Pastelería Nocturna</span>
+            </div>
+            <h1 class="hero-title">Space Light</h1>
+            <p class="hero-subtitle">🌌 Cuando el sol se oculta, los cometas encienden el cielo 🌌</p>
+            <p class="hero-description">
+                Una experiencia única y estelar donde cada detalle está inspirado en el universo.
+                Postres que brillan como estrellas fugaces, bebidas que te harán sentir en órbita,
+                y un ambiente nocturno, cálido y mágico para disfrutar bajo la luz de los cometas.
+            </p>
+            <div class="cta-buttons">
+                <a href="#menu" class="cta-button cta-primary">
+                    <i class="fas fa-rocket"></i>
+                    Explorar Menú Galáctico
+                </a>
+                <a href="#ubicacion" class="cta-button cta-secondary">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Encuentra tu Estrella
+                </a>
+            </div>
+        </div>
+        
+        <!-- Elementos decorativos flotantes -->
+        <div class="floating-elements">
+            <div class="floating-element" style="top: 20%; left: 10%;">🌙</div>
+            <div class="floating-element" style="top: 60%; right: 15%;">⭐</div>
+            <div class="floating-element" style="top: 80%; left: 20%;">☄️</div>
+            <div class="floating-element" style="top: 30%; right: 30%;">✨</div>
+        </div>
+    </section>
+
+    <!-- Sobre Nosotros -->
+    <section id="sobre-nosotros">
+        <h2 class="section-title">
+            <i class="fas fa-star-of-life"></i>
+            Nuestra Misión Cósmica
+        </h2>
+        
+        <div class="about-grid">
+            <div class="about-content">
+                <div class="content-header">
+                    <i class="fas fa-meteor"></i>
+                    <h3>Experiencia Estelar</h3>
+                </div>
+                <p class="lead-text">
+                    Bienvenido a Space Light, donde la magia nocturna del universo se encuentra 
+                    con los sabores más exquisitos de la galaxia.
+                </p>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i class="fas fa-star"></i>
+                        <span>Postres que brillan como estrellas fugaces</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-satellite"></i>
+                        <span>Bebidas que te harán sentir en órbita</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-moon"></i>
+                        <span>Ambiente nocturno, cálido y mágico</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-comet"></i>
+                        <span>Experiencia bajo la luz de los cometas</span>
+                    </div>
+                </div>
+                <p class="closing-text">
+                    💫 Aquí no solo pruebas postres, vives la experiencia de una noche bajo el firmamento.
+                </p>
+            </div>
+
+            <div class="chef-section">
+                <div class="chef-card">
+                    <div class="chef-avatar">
+                        <img src="imagenes/Capture d'écran 2025-09-27 113715.png" alt="Ochako Uraraka" class="chef-image">
+                    </div>
+                    <h3 class="chef-name">Ochako Uraraka</h3>
+                    <p class="chef-title">Jefa & Fundadora</p>
+                    <div class="chef-stats">
+                        <div class="stat">
+                            <i class="fas fa-award"></i>
+                            <span>Maestra Pastelera</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-rocket"></i>
+                            <span>Innovadora Cósmica</span>
+                        </div>
+                    </div>
+                    <p class="chef-description">
+                        Gracias a sus gustos con la calma junto a sus gustos con la pasteleria, mezclandolos, a logrado crear una maravilla para el mundo de la pasteleria.
+                    </p>
+                    <blockquote class="chef-quote">
+                        "¡Haz que cada sorbo sea una aventura espacial!"
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menú Galáctico -->
+    <section id="menu">
+        <h2 class="section-title">
+            <i class="fas fa-utensils"></i>
+            Menú Galáctico
+        </h2>
+
+        <div class="menu-section">
+            <!-- Categorías destacadas -->
+            <div class="menu-categories">
+                <div class="menu-category">
+                    <div class="category-icon">🌙</div>
+                    <h4>Postres Lunares</h4>
+                    <div class="category-items">
+                        <p><strong>Tarta Nebulosa</strong> - Un dulce viaje entre capas suaves y esponjosas</p>
+                        <p><strong>Macarons Galácticos</strong> - Pequeños destellos de sabor que iluminan tu noche</p>
+                    </div>
+                </div>
+                
+                <div class="menu-category">
+                    <div class="category-icon">☕</div>
+                    <h4>Bebidas Cósmicas</h4>
+                    <div class="category-items">
+                        <p><strong>Latte Lunar</strong> - Espuma ligera y aroma que te eleva a las estrellas</p>
+                        <p><strong>Frappé de Meteorito</strong> - Frescura cósmica en cada sorbo</p>
+                    </div>
+                </div>
+                
+                <div class="menu-category">
+                    <div class="category-icon">⭐</div>
+                    <h4>Especialidades</h4>
+                    <div class="category-items">
+                        <p><strong>Constelación de Chocolate</strong> - Dulzura infinita</p>
+                        <p><strong>Smoothie Galáctico</strong> - Energía de las estrellas</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Área de subida de menú -->
+            <div class="menu-upload-area">
+                <h3 class="upload-title">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    Carta Completa
+                </h3>
+                <div class="menu-placeholder" onclick="document.getElementById('menuFile').click()">
+                    <div class="menu-upload-content">
+                        <i class="fas fa-file-image upload-icon"></i>
+                        <h4>Haz clic para subir tu carta</h4>
+                        <p>Sube la imagen de tu menú completo</p>
+                        <span class="upload-formats">JPG, PNG, PDF hasta 5MB</span>
+                    </div>
+                </div>
+                <input type="file" id="menuFile" accept="image/*,application/pdf" style="display: none;">
+                <div id="menuDisplay" class="menu-display"></div>
+            </div>
+
+            <div class="menu-footer">
+                <p class="menu-tagline">
+                    ✨ Tu viaje al sabor comienza aquí... ✨
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ubicación -->
+    <section id="ubicacion">
+        <h2 class="section-title">
+            <i class="fas fa-map-marker-alt"></i>
+            Encuentra tu Estrella
+        </h2>
+
+        <div class="location-section">
+            <div class="location-intro">
+                <p class="location-description">
+                    Ven, relájate y deja que Space Light ilumine tu noche con dulzura.
+                    Te esperamos en nuestro rincón del universo.
+                </p>
+            </div>
+
+            <!-- Mapa -->
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <div class="map-content">
+                        <i class="fas fa-globe-americas map-icon"></i>
+                        <h3>Mapa Interactivo</h3>
+                        <p>Aquí aparecerá tu mapa de Google Maps</p>
+                        <button class="load-map-btn" onclick="loadMap()">
+                            <i class="fas fa-map"></i>
+                            Cargar Mapa
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información de contacto -->
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h4>Ubicación</h4>
+                    <p>Calle de las Estrellas 123<br>Ciudad Espacial, CP 12345</p>
+                    <a href="#" class="contact-action">Ver en Maps</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h4>Teléfono</h4>
+                    <p>+1 (555) SPACE-01<br>+1 (555) 772-2301</p>
+                    <a href="tel:+15557722301" class="contact-action">Llamar</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h4>Horarios Cósmicos</h4>
+                    <div class="schedule">
+                        <p><strong>Lun - Vie:</strong> 6:00 PM - 12:00 AM</p>
+                        <p><strong>Sáb - Dom:</strong> 5:00 PM - 1:00 AM</p>
+                    </div>
+                    <span class="status-badge open">Abierto Ahora</span>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h4>Email</h4>
+                    <p>info@spacelight.com<br>reservas@spacelight.com</p>
+                    <a href="mailto:info@spacelight.com" class="contact-action">Enviar Email</a>
+                </div>
+            </div>
+
+            <!-- Redes sociales -->
+            <div class="social-section">
+                <h3 class="social-title">Síguenos en nuestra Órbita</h3>
+                <div class="social-links">
+                    <a href="#" class="social-link" data-platform="instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link" data-platform="facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link" data-platform="tiktok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="#" class="social-link" data-platform="twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-rocket"></i>
+                <span>Space Light</span>
+            </div>
+            
+            <div class="footer-text">
+                <p>&copy; 2024 Space Light Pastelería. Una experiencia fuera de este mundo.</p>
+                <p class="footer-tagline">Diseñado con amor intergaláctico ✨</p>
+            </div>
+
+            <div class="footer-links">
+                <a href="#menu">Menú</a>
+                <a href="#ubicacion">Ubicación</a>
+                <a href="#sobre-nosotros">Nosotros</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/1234567890?text=Hola%2C%20me%20interesa%20conocer%20más%20sobre%20Space%20Light%20Pastelería" 
+       class="whatsapp-float" target="_blank" title="Contáctanos por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Botón de scroll hacia arriba -->
+    <button class="scroll-to-top" id="scrollToTop">
+        <i class="fas fa-rocket"></i>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
