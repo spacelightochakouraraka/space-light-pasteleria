@@ -174,28 +174,95 @@
                 </div>
             </div>
 
-            <!-- Área de subida de menú -->
-            <div class="menu-upload-area">
-                <h3 class="upload-title">
-                    <i class="fas fa-cloud-upload-alt"></i>
+            <!-- Imagen del menú -->
+            <div class="menu-image-area">
+                <h3 class="menu-image-title">
+                    <i class="fas fa-utensils"></i>
                     Carta Completa
                 </h3>
-                <div class="menu-placeholder" onclick="document.getElementById('menuFile').click()">
-                    <div class="menu-upload-content">
-                        <i class="fas fa-file-image upload-icon"></i>
-                        <h4>Haz clic para subir tu carta</h4>
-                        <p>Sube la imagen de tu menú completo</p>
-                        <span class="upload-formats">JPG, PNG, PDF hasta 5MB</span>
-                    </div>
+                <div class="menu-image-container">
+                    <img src="imagenes/Imagen Menu Space Light.png" alt="Menú Space Light" class="menu-image">
                 </div>
-                <input type="file" id="menuFile" accept="image/*,application/pdf" style="display: none;">
-                <div id="menuDisplay" class="menu-display"></div>
             </div>
 
             <div class="menu-footer">
                 <p class="menu-tagline">
                     ✨ Tu viaje al sabor comienza aquí... ✨
                 </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Minijuego Espacial -->
+    <section id="minijuego">
+        <h2 class="section-title">
+            <i class="fas fa-gamepad"></i>
+            Pastelería Espacial
+        </h2>
+        
+        <div class="game-container">
+            <div class="game-intro">
+                <p class="game-description">
+                    🌟 ¡Ayuda a Ochako a atrapar ingredientes espaciales para crear los mejores pasteles! 🌟<br>
+                    Usa las flechas del teclado o desliza en móvil para mover la nave pastelera.
+                </p>
+            </div>
+            
+            <div class="game-area">
+                <div class="game-canvas-container">
+                    <canvas id="gameCanvas" width="800" height="500"></canvas>
+                    <div class="game-overlay" id="gameOverlay">
+                        <div class="game-start-screen" id="gameStartScreen">
+                            <h3>🚀 Pastelería Espacial 🚀</h3>
+                            <p>Atrapa los ingredientes que caen del espacio</p>
+                            <button class="game-btn" id="startGameBtn">¡Comenzar Juego!</button>
+                        </div>
+                        <div class="game-pause-screen" id="gamePauseScreen" style="display: none;">
+                            <h3>⏸️ Juego Pausado</h3>
+                            <button class="game-btn" id="resumeGameBtn">Continuar</button>
+                            <button class="game-btn" id="restartGameBtn">Reiniciar</button>
+                        </div>
+                        <div class="game-end-screen" id="gameEndScreen" style="display: none;">
+                            <h3>🎉 ¡Juego Terminado! 🎉</h3>
+                            <p>Puntuación Final: <span id="finalScore">0</span></p>
+                            <p>Pasteles Creados: <span id="cakesCreated">0</span></p>
+                            <button class="game-btn" id="playAgainBtn">Jugar de Nuevo</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-info">
+                    <div class="game-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-star"></i>
+                            <span>Puntuación: <span id="currentScore">0</span></span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-birthday-cake"></i>
+                            <span>Pasteles: <span id="cakesCount">0</span></span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-heart"></i>
+                            <span>Vidas: <span id="livesCount">3</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="game-controls">
+                        <h4>Controles:</h4>
+                        <div class="control-item">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>Izquierda</span>
+                        </div>
+                        <div class="control-item">
+                            <i class="fas fa-arrow-right"></i>
+                            <span>Derecha</span>
+                        </div>
+                        <div class="control-item">
+                            <i class="fas fa-space"></i>
+                            <span>Pausa</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -237,7 +304,7 @@
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
                     <h4>Ubicación</h4>
-                    <p>Calle de las Estrellas 123<br>Ciudad Espacial, CP 12345</p>
+                    <p>Calle de las Estrellas 123<br>Saphire District</p>
                     <a href="#" class="contact-action">Ver en Maps</a>
                 </div>
 
@@ -302,7 +369,7 @@
             </div>
             
             <div class="footer-text">
-                <p>&copy; 2024 Space Light Pastelería. Una experiencia fuera de este mundo.</p>
+                <p>&copy; 2025 Space Light Pastelería. Una experiencia fuera de este mundo.</p>
                 <p class="footer-tagline">Diseñado con amor intergaláctico ✨</p>
             </div>
 
